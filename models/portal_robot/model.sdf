@@ -152,7 +152,7 @@
 			<link name="top_leg_lt_rt">
 				<pose>0 0.5 2.05 0 0 0</pose>
 				<inertial>
-					<mass>100.0</mass>
+					<mass>1</mass>
 					<inertia> <!-- interias are tricky to compute -->
 						<ixx>0.083</ixx>       <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
 						<ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
@@ -188,7 +188,7 @@
 			<link name="bottom_leg_lt_rt">
 				<pose>0 -0.5 2.05 0 0 0</pose>
 				<inertial>
-					<mass>100.0</mass>
+					<mass>1</mass>
 					<inertia> <!-- interias are tricky to compute -->
 						<ixx>0.083</ixx>       <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
 						<ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
@@ -381,13 +381,13 @@
 			</joint>
 
 			<!-- fixed joints for the portal mover -->
-			<!-- <joint type="prismatic" name="portal_mover_leg_left_top"> -->
-			<!-- 	<child>portal_mover</child> -->
-			<!-- 	<parent>portal_mover_rail</parent> -->
-			<!-- 	<axis> -->
-			<!-- 		<xyz>0 1 0</xyz> -->
-			<!-- 	</axis> -->
-			<!-- </joint> -->
+			<joint type="prismatic" name="portal_mover_portal_mover_rail">
+				<child>portal_mover</child>
+				<parent>portal_mover_rail</parent>
+				<axis>
+					<xyz>0 1 0</xyz>
+				</axis>
+			</joint>
 
 			<!-- fixed joints for the legs and the top structure -->
 			<joint type="revolute" name="top_leg_lt_rt_right">
@@ -438,29 +438,29 @@
 				</axis>
 			</joint>
 <!-- Mount the rail to the top structure with a "fixed joint"-->
-			<!-- <joint type="revolute" name="bottom_leg_lt_rt_portal_mover_rail"> -->
-			<!-- 	<child>portal_mover_rail</child> -->
-			<!-- 	<parent>bottom_leg_lt_rt</parent> -->
-			<!-- 	<axis> -->
-			<!-- 		<xyz>0 0 1</xyz> -->
-			<!-- 		<limit> -->
-			<!-- 			<upper>0</upper> -->
-			<!-- 			<lower>0</lower> -->
-			<!-- 		</limit> -->
-			<!-- 	</axis> -->
-			<!-- </joint> -->
+			<joint type="revolute" name="bottom_leg_lt_rt_portal_mover_rail">
+				<child>portal_mover_rail</child>
+				<parent>bottom_leg_lt_rt</parent>
+				<axis>
+					<xyz>0 0 1</xyz>
+					<limit>
+						<upper>0</upper>
+						<lower>0</lower>
+					</limit>
+				</axis>
+			</joint>
 
-			<!-- <joint type="revolute" name="top_leg_lt_rt_portal_mover_rail"> -->
-			<!-- 	<child>portal_mover_rail</child> -->
-			<!-- 	<parent>top_leg_lt_rt</parent> -->
-			<!-- 	<axis> -->
-			<!-- 		<xyz>0 0 1</xyz> -->
-			<!-- 		<limit> -->
-			<!-- 			<upper>0</upper> -->
-			<!-- 			<lower>0</lower> -->
-			<!-- 		</limit> -->
-			<!-- 	</axis> -->
-			<!-- </joint> -->
+			<joint type="revolute" name="top_leg_lt_rt_portal_mover_rail">
+				<child>portal_mover_rail</child>
+				<parent>top_leg_lt_rt</parent>
+				<axis>
+					<xyz>0 0 1</xyz>
+					<limit>
+						<upper>0</upper>
+						<lower>0</lower>
+					</limit>
+				</axis>
+			</joint>
 
 
 
