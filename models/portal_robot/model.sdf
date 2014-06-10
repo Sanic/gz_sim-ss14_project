@@ -393,7 +393,7 @@
           <linear>0</linear>
           <angular>0</angular>
         </velocity_decay>
-        <self_collide>0</self_collide>
+        <self_collide>1</self_collide>
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
