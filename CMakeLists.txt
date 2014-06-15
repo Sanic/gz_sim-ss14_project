@@ -11,3 +11,6 @@ link_directories(${GAZEBO_LIBRARY_DIRS} ${OGRE_LIBRARY_DIRS})
 
 add_library(control_portal SHARED src/control_portal.cpp)
 target_link_libraries(control_portal ${GAZEBO_libraries} ${OGRE_LIBRARIES})
+
+add_library(portal_controller SHARED src/portal_controller.cpp)
+target_link_libraries(portal_controller ${GAZEBO_libraries} ${OGRE_LIBRARIES})

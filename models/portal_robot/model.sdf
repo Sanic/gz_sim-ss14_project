@@ -497,7 +497,8 @@
 			</joint>
 
 
-
+      <!-- Load the controller plugin to control the joints of the portal robot ! -->
+  <plugin name="portal_controller" filename="libportal_controller.so"/>
 
 </model>
 </sdf>
