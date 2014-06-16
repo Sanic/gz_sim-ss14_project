@@ -2,10 +2,18 @@
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
 #include <gazebo/common/common.hh>
+#include <gazebo/transport/transport.hh>
+#include <gazebo/msgs/msgs.hh>
+#include "portal_control_request.pb.h"
+#include "vector2d.pb.h"
+
+
 #include <stdio.h>
 
 namespace gazebo
 {
+  // Typedef for the short form of a boost ptr to our control message type
+  typedef const boost::shared_ptr<const portal_control_request_msgs::msgs::PortalControlRequest> PortalControlRequestPtr;
   class PortalController : public ModelPlugin
   {
     private: physics::JointPtr joints;
@@ -14,8 +22,22 @@ namespace gazebo
     private: double jointVelocities;
     private: double jointMaxEfforts;
     private: bool state_drive_down;
+    private: transport::NodePtr node; 
+    private: transport::SubscriberPtr commandSubscriber;
+    private: transport::SubscriberPtr worldStatsSubscriber;
 
     private: common::Time prevUpdateTime;
+
+    /////////////////////////////////////////////////
+    // Control message request
+    public: void cb(PortalControlRequestPtr &_msg)
+    {
+      // Dump the message contents to stdout.
+      std::cout << "Set EE angle to ";
+      this->jointPositions = _msg->angle();
+      std::cout << this->jointPositions << std::endl;
+    }
+
     public: void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
     {
       // Store the pointer to the model
@@ -36,6 +58,11 @@ namespace gazebo
       this->jointMaxEfforts = 100;
       // Fill the Joint ptr
       this->joints = this->model->GetJoint("portal_mover_endeffector_mount");
+
+      // Subscribe to a gazebo topic
+      node = transport::NodePtr(new transport::Node());
+      node->Init(this->model->GetName()); 
+      commandSubscriber = node->Subscribe("/portal_robot/command", &PortalController::cb, this);
     }
 
     // Called by the world update start event
@@ -68,7 +95,7 @@ namespace gazebo
         (effort_cmd < -max_cmd ? -max_cmd : effort_cmd); // calculate max force
 
       this->joints->SetForce(0, effort_cmd);
-      gzdbg << "control [" << pos_curr << "] [" << pos_target << "]" << "effort [ " << effort_cmd << "]";
+      // gzdbg << "control [" << pos_curr << "] [" << pos_target << "]" << "effort [ " << effort_cmd << "]";
     }
 
     // Pointer to the model

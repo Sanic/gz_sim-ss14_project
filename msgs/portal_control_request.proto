@@ -1,0 +1,8 @@
+package portal_control_request_msgs.msgs;
+import "vector2d.proto";
+
+message PortalControlRequest
+{
+  required int32                  link_id     = 1;
+  required double                 angle = 2;
+}
