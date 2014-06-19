@@ -12,16 +12,17 @@
 
 namespace gazebo
 {
+  #define CONTROLLABLE_JOINTS 2
   // Typedef for the short form of a boost ptr to our control message type
   typedef const boost::shared_ptr<const portal_control_request_msgs::msgs::PortalControlRequest> PortalControlRequestPtr;
   class PortalController : public ModelPlugin
   {
-    private: physics::JointPtr joints;
-    private: common::PID jointPIDs;
-    private: double jointPositions;
-    private: double jointVelocities;
-    private: double jointMaxEfforts;
-    private: bool state_drive_down;
+    private: physics::JointPtr joints[CONTROLLABLE_JOINTS];
+    private: common::PID jointPIDs[CONTROLLABLE_JOINTS];
+    private: double jointPositions[CONTROLLABLE_JOINTS];
+    private: double jointVelocities[CONTROLLABLE_JOINTS];
+    private: double jointMaxEfforts[CONTROLLABLE_JOINTS];
+    // private: bool state_drive_down;
     private: transport::NodePtr node; 
     private: transport::SubscriberPtr commandSubscriber;
     private: transport::SubscriberPtr worldStatsSubscriber;
@@ -33,9 +34,17 @@ namespace gazebo
     public: void cb(PortalControlRequestPtr &_msg)
     {
       // Dump the message contents to stdout.
-      std::cout << "Set EE angle to ";
-      this->jointPositions = _msg->angle();
-      std::cout << this->jointPositions << std::endl;
+      int link_id = _msg->link_id();
+      std::cout << "Set joint angle of link " << link_id << " to " << _msg->angle() << std::endl;
+      if(link_id >= 0 && link_id < CONTROLLABLE_JOINTS)
+      {
+        this->jointPositions[link_id] = _msg->angle();
+        std::cout << this->jointPositions[link_id] << std::endl;
+      }
+      else
+      {
+        std::cout << "Link ID out of bounds. Please use 0 or 1" << std::endl;
+      }
     }
 
     public: void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
@@ -48,16 +57,24 @@ namespace gazebo
       this->updateConnection = event::Events::ConnectWorldUpdateBegin(
           boost::bind(&PortalController::OnUpdate, this, _1));
 
-      state_drive_down = false;
-
-      // Init PID Controller:
+      // Init EndEffector Mount PID Controller
       //                            P    I    D    imax imin
-      this->jointPIDs = common::PID(2000, 30.1, 50.01, 1, -1);
-      this->jointPositions = 0;
-      this->jointVelocities = 0;
-      this->jointMaxEfforts = 100;
+      this->jointPIDs[0] = common::PID(2000, 0, 50.01, 1, -1);
+      this->jointPositions[0] = 0;
+      this->jointVelocities[0] = 0;
+      this->jointMaxEfforts[0] = 100;
       // Fill the Joint ptr
-      this->joints = this->model->GetJoint("portal_mover_endeffector_mount");
+      this->joints[0] = this->model->GetJoint("portal_mover_endeffector_mount");
+
+      // Init Portal Mover PID Controller
+      //                                 P    I    D    imax imin
+      this->jointPIDs[1] = common::PID(200, 30.1, 50.01, 1, -1);
+      this->jointPositions[1] = 0;
+      this->jointVelocities[1] = 0;
+      this->jointMaxEfforts[1] = 30;
+      // Fill the Joint ptr
+      this->joints[1] = this->model->GetJoint("portal_mover_portal_mover_rail");
+
 
       // Subscribe to a gazebo topic
       node = transport::NodePtr(new transport::Node());
@@ -73,29 +90,21 @@ namespace gazebo
       common::Time stepTime = currTime - this->prevUpdateTime;
       this->prevUpdateTime = currTime; 
 
-      common::Time passed_seconds_for_start(8,0);
-      if(currTime > passed_seconds_for_start)
+      for(int i=0; i < CONTROLLABLE_JOINTS; i++)
       {
-        if(!state_drive_down)
-        {
-          std::cout << "Init phase over - Drive EE down" << std::endl;
-          this->jointPositions = -0.2;
-          state_drive_down = true;
-        }
+        double pos_target = this->jointPositions[i];
+        double pos_curr = this->joints[i]->GetAngle(0).Radian();
+        double max_cmd = this->jointMaxEfforts[i];
+
+        double pos_err = pos_curr - pos_target; // calculate error for PID
+
+        double effort_cmd = this->jointPIDs[i].Update(pos_err, stepTime);
+        effort_cmd = effort_cmd > max_cmd ? max_cmd :
+          (effort_cmd < -max_cmd ? -max_cmd : effort_cmd); // calculate max force
+
+        this->joints[i]->SetForce(0, effort_cmd);
+        // gzdbg << "control [" << pos_curr << "] [" << pos_target << "]" << "effort [ " << effort_cmd << "]";
       }
-
-      double pos_target = this->jointPositions;
-      double pos_curr = this->joints->GetAngle(0).Radian();
-      double max_cmd = this->jointMaxEfforts;
-
-      double pos_err = pos_curr - pos_target; // calculate error for PID
-
-      double effort_cmd = this->jointPIDs.Update(pos_err, stepTime);
-      effort_cmd = effort_cmd > max_cmd ? max_cmd :
-        (effort_cmd < -max_cmd ? -max_cmd : effort_cmd); // calculate max force
-
-      this->joints->SetForce(0, effort_cmd);
-      // gzdbg << "control [" << pos_curr << "] [" << pos_target << "]" << "effort [ " << effort_cmd << "]";
     }
 
     // Pointer to the model
@@ -108,14 +117,3 @@ namespace gazebo
   // Register this plugin with the simulator
   GZ_REGISTER_MODEL_PLUGIN(PortalController)
 }
-      // Apply a small linear velocity to the model.
-      // this->model->SetLinearVel(math::Vector3(.03, 0, 0));
-      // std::cout << "U2" << std::endl;
-      // physics::JointPtr portal_mover_endeffector_mount_joint = this->model->GetJoint("portal_mover_endeffector_mount");
-      // std::cout << "J A,V:" << portal_mover_endeffector_mount_joint->GetAngle(0).Degree();
-      // std::cout << "," << portal_mover_endeffector_mount_joint->GetVelocity(0) << " ";
-
-      // // Hold the endeffector in it's current place
-      // // portal_mover_endeffector_mount_joint->SetVelocity(0,0); // doesn't keep the EE high
-      // physics::LinkPtr endeffector_mount_link = this->model->GetLink("endeffector_mount");
-      // endeffector_mount_link->SetLinearVel(math::Vector3(0, 0, 0)); // The EE falls slowly down
