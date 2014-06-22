@@ -45,7 +45,10 @@ int main(int argc, char * argv[])
     }
     else
     {
-      std::cout << argc;
+      std::cout << "Usage: portal_controller_publisher LINK_ID ANGLE/COMMAND" << std::endl;
+      std::cout << "link_id 0 = Endeffector mount" << std::endl;
+      std::cout << "link_id 1 = Portal rail" << std::endl;
+      std::cout << "link_id 2 = Gripper. Use angle=0 to open it, and any other number to close it." << std::endl;
     }
     return -1;
 }

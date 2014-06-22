@@ -26,6 +26,7 @@ namespace gazebo
     private: transport::NodePtr node; 
     private: transport::SubscriberPtr commandSubscriber;
     private: transport::SubscriberPtr worldStatsSubscriber;
+    private: bool close_gripper;
 
     private: common::Time prevUpdateTime;
 
@@ -43,7 +44,23 @@ namespace gazebo
       }
       else
       {
-        std::cout << "Link ID out of bounds. Please use 0 or 1" << std::endl;
+        // The gripper control is available at the highest link_id
+        if( link_id >= 0 && link_id == CONTROLLABLE_JOINTS )
+        {
+          int close = _msg->angle();
+          if(close == 0)
+          {
+            close_gripper = false;
+          }
+          else
+          {
+            close_gripper = true;
+          }
+        }
+        else
+        {
+          std::cout << "Link ID out of bounds. Please use 0 or 1" << std::endl;
+        }
       }
     }
 
@@ -59,7 +76,7 @@ namespace gazebo
 
       // Init EndEffector Mount PID Controller
       //                            P    I    D    imax imin
-      this->jointPIDs[0] = common::PID(2000, 0, 50.01, 1, -1);
+      this->jointPIDs[0] = common::PID(500, 0, 50.01, 1, -1);
       this->jointPositions[0] = 0;
       this->jointVelocities[0] = 0;
       this->jointMaxEfforts[0] = 100;
@@ -74,6 +91,8 @@ namespace gazebo
       this->jointMaxEfforts[1] = 30;
       // Fill the Joint ptr
       this->joints[1] = this->model->GetJoint("portal_mover_portal_mover_rail");
+
+      this->close_gripper = false;
 
 
       // Subscribe to a gazebo topic
@@ -104,6 +123,20 @@ namespace gazebo
 
         this->joints[i]->SetForce(0, effort_cmd);
         // gzdbg << "control [" << pos_curr << "] [" << pos_target << "]" << "effort [ " << effort_cmd << "]";
+      }
+
+      physics::JointPtr left_finger, right_finger;
+      left_finger = this->model->GetJoint("palm_left_finger");
+      right_finger = this->model->GetJoint("palm_right_finger");
+      if(this->close_gripper)
+      {
+        left_finger->SetForce(0, -2);
+        right_finger->SetForce(0, 2);
+      }
+      else
+      {
+        left_finger->SetForce(0, 2);
+        right_finger->SetForce(0, -2);
       }
     }
 
