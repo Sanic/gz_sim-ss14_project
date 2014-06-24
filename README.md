@@ -18,3 +18,8 @@ This repository holds the code of our final project for the seminar. The task wa
 export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:/FULL/PATH/TO/repo/build
 ```
 - You can use build/portal_controller_publisher to control the joints of the portal robot. The first parameter is the joint_id (1 = endeffector mount, 2 = rail) while the second parameter is the angle you want to set the joint to.
+
+## Compile and run the tests
+The gtest library will be automatically downloaded to this directory, built and linked against the project. If you execute "make && make test" in the build/ folder, you can run every test defined in tests/.
+Please ensure, that only one cpp file in this directoy has a main method. Otherwise you will get errors during compile time.
+If you want to get the detailed output of the tests, execute build/gazebo_ci_test
