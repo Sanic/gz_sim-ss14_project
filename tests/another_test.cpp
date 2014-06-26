@@ -4,7 +4,7 @@ TEST (SomeTest, Foobaz) {
     ASSERT_EQ (true, true);
 }
 
-TEST (SomeFailingTest, baz) { 
-    ASSERT_EQ (1, 2);
+TEST (AnotherTest, baz) { 
+    ASSERT_EQ (1, 1);
 }
 

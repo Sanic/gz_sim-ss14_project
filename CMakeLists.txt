@@ -13,7 +13,7 @@ link_directories(${GAZEBO_LIBRARY_DIRS} ${OGRE_LIBRARY_DIRS})
 
 # Necessary BOOST packages ...
 include(FindBoost)
-find_package(Boost REQUIRED system filesystem regex)
+find_package(Boost REQUIRED system filesystem regex thread)
 find_package(Protobuf REQUIRED)
 
 add_subdirectory(msgs)
@@ -57,7 +57,7 @@ add_dependencies(portal_controller_publisher portal_control_request_msgs)
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
 add_dependencies(${PROJECT_TEST_NAME} googletest)
-target_link_libraries(${PROJECT_TEST_NAME} pthread)
+target_link_libraries(${PROJECT_TEST_NAME} pthread ${Boost_LIBRARIES})
 	target_link_libraries(${PROJECT_TEST_NAME} 
 		${GTEST_LIBS_DIR}/libgtest.a
 		${GTEST_LIBS_DIR}/libgtest_main.a
