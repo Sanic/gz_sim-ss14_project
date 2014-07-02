@@ -9,8 +9,8 @@
 // Define link ids of the controllable parts
 // and the values to close/open the gripper
 // PC = PortalController
-#define PC_MOUNT_RAIL_LINK_ID 0
-#define PC_ENDEFFECTOR_LINK_ID 1
+#define PC_ENDEFFECTOR_LINK_ID 0
+#define PC_MOUNT_RAIL_LINK_ID 1
 #define PC_GRIPPER_LINK_ID 2
 
 #define PC_GRIPPER_OPEN 0
@@ -22,7 +22,7 @@
  * This class communicates with the PortalController Plugin
  * that will be loaded when you add a portal_robot to
  * your gazebo world.
- * The communication will be done via gazebo topics
+ * The communication will be done via gazebo topics.
  */
 class PortalControllerComm
 {

@@ -63,7 +63,7 @@ add_dependencies(portal_controller_publisher portal_control_request_msgs)
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
 add_dependencies(${PROJECT_TEST_NAME} googletest)
-target_link_libraries(${PROJECT_TEST_NAME} pthread ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_TEST_NAME} pthread ${Boost_LIBRARIES} portal_controller_comm)
 	target_link_libraries(${PROJECT_TEST_NAME} 
 		${GTEST_LIBS_DIR}/libgtest.a
 		${GTEST_LIBS_DIR}/libgtest_main.a
