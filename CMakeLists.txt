@@ -50,6 +50,10 @@ add_library(portal_controller_comm src/portal_controller_comm.cpp)
 target_link_libraries(portal_controller_comm portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
 add_dependencies(portal_controller_publisher portal_control_request_msgs)
 
+#add the gztest library
+add_library(gztest src/gztest_helpers.cpp)
+target_link_libraries(gztest ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} )
+
 # Build tests
 # add_executable(delayed_tests tests/delayed_tests.cpp)
 # Download and build googletest (from ext/gtest/ ) before building the test
@@ -63,7 +67,7 @@ add_dependencies(portal_controller_publisher portal_control_request_msgs)
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
 add_dependencies(${PROJECT_TEST_NAME} googletest)
-target_link_libraries(${PROJECT_TEST_NAME} pthread ${Boost_LIBRARIES} portal_controller_comm)
+target_link_libraries(${PROJECT_TEST_NAME} pthread ${Boost_LIBRARIES} portal_controller_comm gztest)
 	target_link_libraries(${PROJECT_TEST_NAME} 
 		${GTEST_LIBS_DIR}/libgtest.a
 		${GTEST_LIBS_DIR}/libgtest_main.a
