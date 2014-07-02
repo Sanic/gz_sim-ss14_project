@@ -41,7 +41,8 @@ target_link_libraries(portal_controller portal_control_request_msgs ${GAZEBO_lib
 add_dependencies(portal_controller portal_control_request_msgs)
 
 add_executable(portal_controller_publisher src/portal_controller_publisher.cpp)
-target_link_libraries(portal_controller_publisher portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
+#target_link_libraries(portal_controller_publisher portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
+target_link_libraries(portal_controller_publisher portal_controller_comm)
 add_dependencies(portal_controller_publisher portal_control_request_msgs)
 
 # PortalControllerComm library

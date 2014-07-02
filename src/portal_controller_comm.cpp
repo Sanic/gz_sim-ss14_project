@@ -2,15 +2,21 @@
 
 PortalControllerComm::PortalControllerComm()
 {
-        gazebo::load();
-        gazebo::transport::init();
-        gazebo::transport::run();
-        gazebo::transport::NodePtr node(new gazebo::transport::Node());
+  gazebo::load();
+  gazebo::transport::init();
+  gazebo::transport::run();
+  gazebo::transport::NodePtr node(new gazebo::transport::Node());
 
-        node->Init("portal_controller_comm");
-        this->pub = node->Advertise<portal_control_request_msgs::msgs::PortalControlRequest>("/portal_robot/command");
-        pub->WaitForConnection();
+  node->Init("portal_controller_comm");
+  this->pub = node->Advertise<portal_control_request_msgs::msgs::PortalControlRequest>("/portal_robot/command");
+  pub->WaitForConnection();
 }
+
+PortalControllerComm::~PortalControllerComm()
+{
+  gazebo::transport::fini();
+}
+
 
 portal_control_request_msgs::msgs::PortalControlRequest PortalControllerComm::createRequest(int link_id, float angle)
 {
@@ -33,4 +39,3 @@ void PortalControllerComm::setEndEffectorHeight(float value){
 void PortalControllerComm::setMountRailPosition(float value){
   pub->Publish(createRequest(PC_MOUNT_RAIL_LINK_ID, value));
 }
-// TODO: Destructor

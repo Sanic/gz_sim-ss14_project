@@ -26,7 +26,8 @@
  */
 class PortalControllerComm
 {
-  PortalControllerComm();
+  public: PortalControllerComm();
+  public: ~PortalControllerComm();
   private: gazebo::transport::PublisherPtr pub;
   private: portal_control_request_msgs::msgs::PortalControlRequest createRequest(int link_id, float angle);
   public: void closeGripper();

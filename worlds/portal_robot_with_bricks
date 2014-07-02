@@ -15,6 +15,18 @@
 <model name="r_box">
   <pose>0.2 -0.2 0.5 0 0 0</pose>
   <link name="link">
+    <inertial>
+      <mass>4.0</mass>
+      <inertia> <!-- interias are tricky to compute -->
+        <!-- http://answers.gazebosim.org/question/4372/the-inertia-matrix-explained/ -->
+        <ixx>0.0224432</ixx>       <!-- for a box: ixx = 0.083 * mass * (0.24*0.24 + 0.1*0.1) -->
+        <ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
+        <ixz>0.0</ixz>         <!-- for a box: ixz = 0 -->
+        <iyy>0.00664</iyy>       <!-- for a box: iyy = 0.083 * mass * (0.1*0.1 + 0.1*0.1) -->
+        <iyz>0.0</iyz>         <!-- for a box: iyz = 0 -->
+        <izz>0.0224432</izz>       <!-- for a box: izz = 0.083 * mass * (0.1*0.1 + 0.24*0.24) -->
+      </inertia>
+    </inertial>
     <collision name="collision">
       <geometry>
         <box>
