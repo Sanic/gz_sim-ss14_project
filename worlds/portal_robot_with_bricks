@@ -11,5 +11,27 @@
   <uri>model://portal_robot</uri>
   <pose>0.0 0.0 0 0 0 0</pose>
 </include>
+
+<model name="box">
+		<pose>0 0 0.3 0 0 0</pose>
+  <link name="link">
+    <collision name="collision">
+      <geometry>
+        <box>
+          <size>0.1 0.1 0.1</size>
+        </box>
+      </geometry>
+    </collision>
+    
+    <visual name="visual">
+      <geometry>
+        <box>
+          <size>0.1 0.1 0.1</size>
+        </box>
+      </geometry>
+    </visual>
+  </link>
+</model>
+
 </world>
 </sdf>
