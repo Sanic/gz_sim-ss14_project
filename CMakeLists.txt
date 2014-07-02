@@ -40,6 +40,9 @@ add_library(portal_controller SHARED src/portal_controller.cpp)
 target_link_libraries(portal_controller portal_control_request_msgs ${GAZEBO_libraries} ${OGRE_LIBRARIES})
 add_dependencies(portal_controller portal_control_request_msgs)
 
+add_library(TestPlugin SHARED src/TestPlugin.cpp)
+target_link_libraries(TestPlugin ${GAZEBO_libraries})
+
 add_executable(portal_controller_publisher src/portal_controller_publisher.cpp)
 #target_link_libraries(portal_controller_publisher portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
 target_link_libraries(portal_controller_publisher portal_controller_comm)
