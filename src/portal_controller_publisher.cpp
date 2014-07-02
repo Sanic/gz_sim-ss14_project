@@ -31,12 +31,11 @@ int main(int argc, char * argv[])
 
         gazebo::transport::PublisherPtr pub =
                 node->Advertise<portal_control_request_msgs::msgs::PortalControlRequest>("/portal_robot/command");
-        // std::cout << "Wait for connection" << std::endl;
-        // pub->WaitForConnection();
+        pub->WaitForConnection();
         while(true)
         {
-          std::cout << "pub" << std::endl;
           pub->Publish(request);
+          std::cout << "pub" << std::endl;
           gazebo::common::Time::MSleep(500);
         }
         gazebo::transport::fini();

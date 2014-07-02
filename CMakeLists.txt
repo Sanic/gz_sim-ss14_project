@@ -44,6 +44,11 @@ add_executable(portal_controller_publisher src/portal_controller_publisher.cpp)
 target_link_libraries(portal_controller_publisher portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
 add_dependencies(portal_controller_publisher portal_control_request_msgs)
 
+# PortalControllerComm library
+add_library(portal_controller_comm src/portal_controller_comm.cpp)
+target_link_libraries(portal_controller_comm portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
+add_dependencies(portal_controller_publisher portal_control_request_msgs)
+
 # Build tests
 # add_executable(delayed_tests tests/delayed_tests.cpp)
 # Download and build googletest (from ext/gtest/ ) before building the test
