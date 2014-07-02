@@ -22,7 +22,6 @@ namespace gazebo
     private: double jointPositions[CONTROLLABLE_JOINTS];
     private: double jointVelocities[CONTROLLABLE_JOINTS];
     private: double jointMaxEfforts[CONTROLLABLE_JOINTS];
-    // private: bool state_drive_down;
     private: transport::NodePtr node; 
     private: transport::SubscriberPtr commandSubscriber;
     private: transport::SubscriberPtr worldStatsSubscriber;
