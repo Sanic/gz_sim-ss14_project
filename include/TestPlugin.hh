@@ -3,8 +3,7 @@
 
 #include "gazebo/gazebo.hh"
 #include "gazebo/physics/physics.hh"
-#include "GazeboTestServer.hh"
-#include "TestMethods.hh"
+#include "abstractgazebotestserver.h"
 
 namespace gazebo
 {
@@ -12,18 +11,17 @@ namespace gazebo
   // If the bounding box of an object is less than this value (in meters) over the other object, it is considered to be "on" the other object.
   #define ON_ENTITY_TOLERANCE 0.01
 
-  class TestPlugin : public WorldPlugin, public TestMethods
+  class TestPlugin : public WorldPlugin, public AbstractGazeboTestServer
   {
     public:
-	  ~TestPlugin();
+	  TestPlugin();
       void Load(physics::WorldPtr _world, sdf::ElementPtr _sdf);
       void OnUpdate(const common::UpdateInfo & /*_info*/);
-      bool OnObject(const std::string& object, const std::string& surface);
+      bool onObject(const std::string& object, const std::string& surface);
     private:
       bool OnEntity(physics::EntityPtr entity, physics::EntityPtr onEntity);
       event::ConnectionPtr updateConnection;
       physics::WorldPtr world;
-      GazeboTestServer server;
   };
 
   GZ_REGISTER_WORLD_PLUGIN(TestPlugin)

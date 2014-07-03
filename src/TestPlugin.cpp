@@ -2,13 +2,18 @@
 
 namespace gazebo
 {
+
+	//////////////////////////////////////////////////
+	TestPlugin::TestPlugin() : AbstractGazeboTestServer(new jsonrpc::HttpServer(8080))
+	{
+	}
+
 	//////////////////////////////////////////////////
 	void TestPlugin::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf)
 	{
 		this->world = _world;
 		this->updateConnection = event::Events::ConnectWorldUpdateBegin(boost::bind(&TestPlugin::OnUpdate, this, _1));
-        this->server.registerTestMethodImpl(this);
-        this->server.StartListening();
+        StartListening();
 	}
 
 	//////////////////////////////////////////////////
@@ -19,7 +24,7 @@ namespace gazebo
     }
 
 	//////////////////////////////////////////////////
-    bool TestPlugin::OnObject(const std::string& object, const std::string& surface)
+    bool TestPlugin::onObject(const std::string& object, const std::string& surface)
     {
     	return OnEntity(this->world->GetModel(object), this->world->GetModel(surface));
     }
@@ -47,4 +52,5 @@ namespace gazebo
     			onEntityBox.GetCenter().y - onEntityBox.GetYLength() / 2 <= center.y &&
     			center.z - entityBox.GetZLength() / 2 - onEntityBox.GetCenter().z - onEntityBox.GetZLength() / 2 <= ON_ENTITY_TOLERANCE;
     }
+
 }
