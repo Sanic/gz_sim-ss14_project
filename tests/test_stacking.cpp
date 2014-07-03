@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include <boost/thread.hpp>
 #include "portal_controller_comm.h"
+#include "gazebotestclient.h"
+#include "gztest_helpers.h"
 
 /*
  * Use the PortalRobot to stack one object on another
@@ -40,8 +42,10 @@ TEST (StackObject, ShouldSucceed) {
   comm.setEndEffectorHeight(0);
   comm.setMountRailPosition(0);
   // TODO: ASSERT OBJECT r_box on g_box == TRUE
-
-  ASSERT_EQ (true, true);
+  GazeboTestClient client(new jsonrpc::HttpClient("http://localhost:8080"));
+  ASSERT_TRUE(client.onObject("box1", "box2"));
+  //boost::function<bool()> check = boost::bind (client.onObject, "box1", "box2");
+  //ASSERT_EQ (th.waitForTrue(check, 10000), true);
 }
 // 
 // TEST (AnotherTest, baz) { 
