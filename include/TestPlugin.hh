@@ -8,6 +8,9 @@
 namespace gazebo
 {
 
+  // Default RPC port
+  #define RPC_PORT 8080
+
   // If the bounding box of an object is less than this value (in meters) over the other object, it is considered to be "on" the other object.
   #define ON_ENTITY_TOLERANCE 0.01
 

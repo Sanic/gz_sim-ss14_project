@@ -4,7 +4,7 @@ namespace gazebo
 {
 
 	//////////////////////////////////////////////////
-	TestPlugin::TestPlugin() : AbstractGazeboTestServer(new jsonrpc::HttpServer(8080))
+	TestPlugin::TestPlugin() : AbstractGazeboTestServer(new jsonrpc::HttpServer(RPC_PORT))
 	{
 	}
 
