@@ -7,18 +7,21 @@ namespace gazebo
 	{
 		this->world = _world;
 		this->updateConnection = event::Events::ConnectWorldUpdateBegin(boost::bind(&TestPlugin::OnUpdate, this, _1));
+        this->server.registerTestMethodImpl(this);
+        this->server.StartListening();
 	}
 
 	//////////////////////////////////////////////////
 	void TestPlugin::OnUpdate(const common::UpdateInfo & /*_info*/)
     {
-    	std::cout << "Box1 on Box2: " << OnEntity("box1", "box2") << std::endl;
+    	//std::cout << "Box1 on Box2: " << OnEntity("box1", "box2") << std::endl;
     	//boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
     }
 
 	//////////////////////////////////////////////////
-    bool TestPlugin::OnEntity(std::string entity, std::string onEntity) {
-    	return OnEntity(this->world->GetModel(entity), this->world->GetModel(onEntity));
+    bool TestPlugin::OnObject(const std::string& object, const std::string& surface)
+    {
+    	return OnEntity(this->world->GetModel(object), this->world->GetModel(surface));
     }
 
 	//////////////////////////////////////////////////
@@ -37,7 +40,7 @@ namespace gazebo
     	if(center.z < onEntityBox.GetCenter().z) {
     		return false;
     	}
-    	
+
     	return 	onEntityBox.GetCenter().x + onEntityBox.GetXLength() / 2 >= center.x &&
     			onEntityBox.GetCenter().x - onEntityBox.GetXLength() / 2 <= center.x &&
     			onEntityBox.GetCenter().y + onEntityBox.GetYLength() / 2 >= center.y &&

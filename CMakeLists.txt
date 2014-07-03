@@ -15,7 +15,6 @@ link_directories(${GAZEBO_LIBRARY_DIRS} ${OGRE_LIBRARY_DIRS})
 include(FindBoost)
 find_package(Boost REQUIRED system filesystem regex thread)
 find_package(Protobuf REQUIRED)
-
 add_subdirectory(msgs)
 
 # Include gazebo dirs and our msgs dirs in build/
@@ -33,6 +32,8 @@ enable_testing()
 include_directories(${GTEST_INCLUDE_DIRS} ${COMMON_INCLUDES})
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
 
+add_subdirectory(${EXT_PROJECTS_DIR}/json-rpc-cpp)
+
 add_library(control_portal SHARED src/control_portal.cpp)
 target_link_libraries(control_portal ${GAZEBO_libraries} ${OGRE_LIBRARIES})
 
@@ -40,8 +41,8 @@ add_library(portal_controller SHARED src/portal_controller.cpp)
 target_link_libraries(portal_controller portal_control_request_msgs ${GAZEBO_libraries} ${OGRE_LIBRARIES})
 add_dependencies(portal_controller portal_control_request_msgs)
 
-add_library(TestPlugin SHARED src/TestPlugin.cpp)
-target_link_libraries(TestPlugin ${GAZEBO_libraries})
+add_library(TestPlugin SHARED src/TestPlugin.cpp src/GazeboTestServer.cpp)
+target_link_libraries(TestPlugin ${GAZEBO_libraries} jsonrpc)
 
 add_executable(portal_controller_publisher src/portal_controller_publisher.cpp)
 #target_link_libraries(portal_controller_publisher portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
