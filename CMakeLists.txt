@@ -30,9 +30,12 @@ set(EXT_PROJECTS_DIR ${PROJECT_SOURCE_DIR}/ext)
 add_subdirectory(${EXT_PROJECTS_DIR}/gtest)
 enable_testing()
 include_directories(${GTEST_INCLUDE_DIRS} ${COMMON_INCLUDES})
+# TODO provide proper CMAKE var
+include_directories(${EXT_PROJECTS_DIR}/gztest/include)
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
 
-add_subdirectory(${EXT_PROJECTS_DIR}/json-rpc-cpp)
+# add_subdirectory(${EXT_PROJECTS_DIR}/json-rpc-cpp)
+add_subdirectory(${EXT_PROJECTS_DIR}/gztest)
 
 add_library(control_portal SHARED src/control_portal.cpp)
 target_link_libraries(control_portal ${GAZEBO_libraries} ${OGRE_LIBRARIES})
@@ -40,9 +43,6 @@ target_link_libraries(control_portal ${GAZEBO_libraries} ${OGRE_LIBRARIES})
 add_library(portal_controller SHARED src/portal_controller.cpp)
 target_link_libraries(portal_controller portal_control_request_msgs ${GAZEBO_libraries} ${OGRE_LIBRARIES})
 add_dependencies(portal_controller portal_control_request_msgs)
-
-add_library(TestPlugin SHARED src/TestPlugin.cpp)
-target_link_libraries(TestPlugin ${GAZEBO_libraries} jsonrpc)
 
 add_executable(portal_controller_publisher src/portal_controller_publisher.cpp)
 #target_link_libraries(portal_controller_publisher portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
@@ -53,10 +53,6 @@ add_dependencies(portal_controller_publisher portal_control_request_msgs)
 add_library(portal_controller_comm src/portal_controller_comm.cpp)
 target_link_libraries(portal_controller_comm portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
 add_dependencies(portal_controller_publisher portal_control_request_msgs)
-
-#add the gztest library
-add_library(gztest src/gztest_helpers.cpp)
-target_link_libraries(gztest ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} )
 
 # Build tests
 # add_executable(delayed_tests tests/delayed_tests.cpp)
@@ -70,8 +66,8 @@ target_link_libraries(gztest ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} )
 
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
-add_dependencies(${PROJECT_TEST_NAME} googletest)
-target_link_libraries(${PROJECT_TEST_NAME} pthread ${Boost_LIBRARIES} portal_controller_comm gztest jsonrpc)
+add_dependencies(${PROJECT_TEST_NAME} googletest_project)
+target_link_libraries(${PROJECT_TEST_NAME} pthread ${Boost_LIBRARIES} portal_controller_comm gztest)
 	target_link_libraries(${PROJECT_TEST_NAME} 
 		${GTEST_LIBS_DIR}/libgtest.a
 		${GTEST_LIBS_DIR}/libgtest_main.a

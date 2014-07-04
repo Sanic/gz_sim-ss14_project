@@ -1,3 +1,6 @@
 [submodule "ext/json-rpc-cpp"]
 	path = ext/json-rpc-cpp
 	url = git://github.com/cinemast/libjson-rpc-cpp.git
+[submodule "ext/gztest"]
+	path = ext/gztest
+	url = https://github.com/Sanic/gztest.git
