@@ -41,9 +41,8 @@ TEST (StackObject, ShouldSucceed) {
   // Drive into homepose
   comm.setEndEffectorHeight(0);
   comm.setMountRailPosition(0);
-  // TODO: ASSERT OBJECT r_box on g_box == TRUE
   GazeboTestClient client(new jsonrpc::HttpClient("http://localhost:8080"));
-  ASSERT_TRUE(client.onObject("box1", "box2"));
+  ASSERT_TRUE(client.onObject("r_box", "g_box"));
   //boost::function<bool()> check = boost::bind (client.onObject, "box1", "box2");
   //ASSERT_EQ (th.waitForTrue(check, 10000), true);
 }

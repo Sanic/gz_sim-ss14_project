@@ -8,6 +8,7 @@ This repository holds the code of our final project for the seminar. The task wa
 - Write gtest unit tests that start the simulation, and checks if an object has been successfully transfered and placed on the second table
 ## Usage
 - Checkout the repository with git clone --recursive , to get the contents of all submodules
+- Install https://github.com/cinemast/libjson-rpc-cpp
 - Go to the folder where the repository contents are
 - mkdir build/
 - cd build
