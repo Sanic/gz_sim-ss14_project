@@ -46,15 +46,7 @@ namespace gazebo
         // The gripper control is available at the highest link_id
         if( link_id >= 0 && link_id == CONTROLLABLE_JOINTS )
         {
-          int close = _msg->angle();
-          if(close == 0)
-          {
-            close_gripper = false;
-          }
-          else
-          {
-            close_gripper = true;
-          }
+          close_gripper = _msg->angle() != 0;
         }
         else
         {
