@@ -2,7 +2,7 @@
 #include <boost/thread.hpp>
 #include "portal_controller_comm.h"
 // #include "gazebotestclient.h"
-#include "gztest/gztest_helpers.h"
+#include "gztest/test_helpers.h"
 #include "gztest/test_client.h"
 
 /*
@@ -45,7 +45,7 @@ TEST (StackObject, ShouldSucceed) {
   // GazeboTestClient client(new jsonrpc::HttpClient("http://localhost:8080"));
   gztest::TestClient client("http://localhost:8080");
   std::cout << "TEST";
-  ASSERT_TRUE(client.onObject("r_box", "g_box"));
+  ASSERT_TRUE(client.OnObject("r_box", "g_box"));
   //boost::function<bool()> check = boost::bind (client.onObject, "box1", "box2");
   //ASSERT_EQ (th.waitForTrue(check, 10000), true);
 }
