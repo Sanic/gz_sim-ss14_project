@@ -1,4 +1,4 @@
-# Gazebo seminar project: Integration testing with Gazebo
+## Gazebo seminar project: Integration testing with Gazebo
 This repository holds the code of our final project for the seminar. The task was:
 
 - Model a world with a portal robot and two objects on it's workspace. The portal robot has 2 DOF and a gripper.
@@ -7,7 +7,7 @@ This repository holds the code of our final project for the seminar. The task wa
   - Allows to check that a object is laying on another object.
 - Write gtest unit tests that start the simulation, and checks if an object has been successfully transfered and placed on the second table
 
-## Usage
+### Usage
 - Checkout the repository with git clone --recursive , to get the contents of all submodules
 - Install the JSON-RPC Library from https://github.com/cinemast/libjson-rpc-cpp
 - Go to the folder where the repository contents are
@@ -24,8 +24,15 @@ export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:/FULL/PATH/TO/repo/build
 ```
 export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:/FULL/PATH/TO/repo/build/ext/gztest/
 ```
+- In the main directory, start gazebo with a world containing our robot with:
+```
+gazebo worlds/portal_robot_with_bricks
+```
 - You can use build/portal_controller_publisher to control the joints of the portal robot. The first parameter is the link_id (0 = endeffector mount, 1 = rail) while the second parameter is the angle you want to set the joint to. If you set the link_id to 2, you can open or close the gripper. Use the value "0" as the angle to close the gripper, and every other value >=1 to open it.
 
-## Compile and run the tests
+### Compile and run the tests
 The gtest library will be automatically downloaded to this directory, built and linked against the project. If you execute "cmake .. && make" and "./gazebo_ci_test" in the build/ folder, you can run every test defined in tests/.
 Please ensure, that only one cpp file in this directoy has a main method. Otherwise you will get errors during compile time.
+
+### Version
+This project has been compiled and tested against 1.9.5
