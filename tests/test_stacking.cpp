@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include <boost/thread.hpp>
 #include "portal_controller_comm.h"
-// #include "gazebotestclient.h"
 #include "gztest/test_helpers.h"
 #include "gztest/test_client.h"
 
