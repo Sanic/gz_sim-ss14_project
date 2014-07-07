@@ -9,7 +9,6 @@ This repository holds the code of our final project for the seminar. The task wa
 
 ### Usage
 - Checkout the repository with git clone --recursive , to get the contents of all submodules
-- Install the JSON-RPC Library from https://github.com/cinemast/libjson-rpc-cpp
 - Go to the folder where the repository contents are
 - mkdir build/
 - cd build
