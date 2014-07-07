@@ -34,7 +34,6 @@ include_directories(${GTEST_INCLUDE_DIRS} ${COMMON_INCLUDES})
 include_directories(${EXT_PROJECTS_DIR}/gztest/include)
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
 
-# add_subdirectory(${EXT_PROJECTS_DIR}/json-rpc-cpp)
 add_subdirectory(${EXT_PROJECTS_DIR}/gztest)
 
 add_library(control_portal SHARED src/control_portal.cpp)
