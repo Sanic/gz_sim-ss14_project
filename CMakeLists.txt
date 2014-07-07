@@ -31,10 +31,9 @@ add_subdirectory(${EXT_PROJECTS_DIR}/gtest)
 enable_testing()
 include_directories(${GTEST_INCLUDE_DIRS} ${COMMON_INCLUDES})
 # TODO provide proper CMAKE var
-include_directories(${EXT_PROJECTS_DIR}/gztest/include)
-set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
-
 add_subdirectory(${EXT_PROJECTS_DIR}/gztest)
+include_directories(${EXT_PROJECTS_DIR}/gztest/include ${JSON_RPC_INCLUDES})
+set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
 
 add_library(control_portal SHARED src/control_portal.cpp)
 target_link_libraries(control_portal ${GAZEBO_libraries} ${OGRE_LIBRARIES})
