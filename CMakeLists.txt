@@ -17,11 +17,8 @@ find_package(Boost REQUIRED system filesystem regex thread)
 find_package(Protobuf REQUIRED)
 add_subdirectory(msgs)
 
-# Include gazebo dirs and our msgs dirs in build/
-include_directories(
-  ${GAZEBO_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_BINARY_DIR}/msgs
-)
+# Include our msgs dirs in build/
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/msgs)
 
 # Download and compile gtest on the fly ... Thanks to:
 # https://github.com/snikulov/google-test-examples 
