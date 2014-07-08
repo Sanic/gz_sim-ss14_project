@@ -45,6 +45,8 @@ TEST (StackObject, ShouldSucceed) {
   gztest::TestClient client("http://localhost:8080");
   std::cout << "TEST";
   ASSERT_TRUE(client.OnObject("r_box", "g_box"));
+  sleep(10000);
+  client.LoadWorld("worlds/test1.sdf");
   //boost::function<bool()> check = boost::bind (client.onObject, "box1", "box2");
   //ASSERT_EQ (th.waitForTrue(check, 10000), true);
 }
