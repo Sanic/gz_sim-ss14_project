@@ -23,6 +23,12 @@ export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:/FULL/PATH/TO/repo/build
 ```
 export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:/FULL/PATH/TO/repo/build/ext/gztest/
 ```
+- Add the portal_robot model to your model database. You can do this by making a symlink to it:
+```
+cd ~/.gazebo/models
+ln -s /FULL/PATH/TO/REPO/models/portal_robot
+```
+
 - In the main directory, start gazebo with a world containing our robot with:
 ```
 gazebo worlds/portal_robot_with_bricks
