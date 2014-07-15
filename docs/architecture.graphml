@@ -39,10 +39,11 @@
     <node id="n2">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="75.0" width="96.0" x="295.5" y="307.0"/>
+          <y:Geometry height="75.0" width="93.0" x="298.5" y="307.0"/>
           <y:Fill color="#00CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.40625" modelName="custom" textColor="#000000" visible="true" width="75.373046875" x="10.3134765625" y="28.796875">Gazebo Core<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.8125" modelName="custom" textColor="#000000" visible="true" width="73.3515625" x="9.82421875" y="22.09375">gztest
+TestWrapper<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -56,11 +57,10 @@
     <node id="n3">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="55.0" width="161.0" x="263.0" y="205.0"/>
+          <y:Geometry height="31.0" width="90.74545454545455" x="249.88181818181818" y="205.0"/>
           <y:Fill color="#00CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.8125" modelName="custom" textColor="#000000" visible="true" width="102.044921875" x="29.4775390625" y="12.09375">gztest ServerSide 
-SystemPlugin<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.40625" modelName="custom" textColor="#000000" visible="true" width="84.70703125" x="3.019211647727275" y="6.796875">Gazebo Server<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -129,17 +129,35 @@ SystemPlugin<y:LabelModel>
         </y:GenericNode>
       </data>
     </node>
+    <node id="n7">
+      <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="31.0" width="90.74545454545455" x="360.6272727272727" y="205.0"/>
+          <y:Fill color="#00CCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.40625" modelName="custom" textColor="#000000" visible="true" width="80.04296875" x="5.351242897727275" y="6.796875">Gazebo Client<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
     <edge id="e0" source="n2" target="n3">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.40625" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="29.34765625" x="-44.673828125" y="-32.203125">uses<y:LabelModel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.8125" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="58.703125" x="-81.917291991403" y="-46.90625">launches /
+controls<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>
-              <y:SmartEdgeLabelModelParameter angle="0.0" distance="30.0" distanceToCenter="true" position="left" ratio="0.5" segment="0"/>
+              <y:SmartEdgeLabelModelParameter angle="6.283185307179586" distance="37.05792087516709" distanceToCenter="true" position="left" ratio="0.3674948240165624" segment="-1"/>
             </y:ModelParameter>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
@@ -208,7 +226,7 @@ SystemPlugin<y:LabelModel>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.8125" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="109.375" x="-143.02491482342919" y="-45.40625">Communication via 
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.8125" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="109.375" x="-142.98518093671044" y="-45.40625">Communication via 
 JSON-RPC<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
@@ -226,6 +244,23 @@ JSON-RPC<y:LabelModel>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e7" source="n2" target="n7">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Arial" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.40625" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="52.03515625" x="24.87966451749719" y="-44.203125">launches<y:LabelModel>
+              <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartEdgeLabelModelParameter angle="0.0" distance="30.0" distanceToCenter="true" position="right" ratio="0.5" segment="0"/>
+            </y:ModelParameter>
+          </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
