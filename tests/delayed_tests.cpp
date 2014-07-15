@@ -4,9 +4,6 @@
 #include <boost/thread.hpp>
 #include "gztest/test_helpers.h"
 
-// Use the helper methods from gztest
-gztest::TestHelper th;
-
 TEST (SquareRootTest, Foobar) { 
     ASSERT_EQ (true, true);
 }
