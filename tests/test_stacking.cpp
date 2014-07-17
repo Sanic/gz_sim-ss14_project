@@ -17,9 +17,11 @@ void sleep(int ms){
 
 TEST (StackObject, ShouldSucceed) { 
   gztest::TestClient client("http://localhost:8080");
-  client.LoadWorld("/home/moritz/gz_sim-ss14_project/worlds/portal_robot_with_bricks");
+  ASSERT_TRUE(client.LoadWorld("/home/moritz/gz_sim-ss14_project/worlds/portal_robot_with_bricks"));
   gztest::TestHelper th;
   PortalControllerComm comm;
+
+  ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], -0.2, 0.01));
 
   // Drive to object
   comm.setMountRailPosition(-0.2f);
@@ -39,11 +41,11 @@ TEST (StackObject, ShouldSucceed) {
   comm.setEndEffectorHeight(-0.5f);
   sleep(700);
   comm.openGripper();
-  sleep(700);
 
   // Drive into homepose
   comm.setEndEffectorHeight(0);
   comm.setMountRailPosition(0);
+  ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], 0.25, 0.01));
   boost::function<bool()> check = boost::bind (&gztest::TestClient::OnObject, &client, "r_box", "g_box");
   ASSERT_EQ (th.waitForTrue(check, 10000), true);
 }
