@@ -11,43 +11,61 @@
  * Please ensure that the Gazebo Master is running the correct world.
  */
 
-void sleep(int _ms){
-  boost::this_thread::sleep(boost::posix_time::milliseconds(_ms));
+void sleep(int _ms)
+{
+	boost::this_thread::sleep(boost::posix_time::milliseconds(_ms));
 }
 
-TEST (StackObject, ShouldSucceed) { 
-  gztest::TestClient client("http://localhost:8080");
-  ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks"));
-  gztest::TestHelper th;
-  PortalControllerComm comm;
+void moveBox()
+{
+	PortalControllerComm comm;
+	// Drive to object
+	comm.SetMountRailPosition(-0.2f);
+	sleep(700);
+	comm.SetEndEffectorHeight(-0.5f);
+	sleep(700);
+	comm.CloseGripper();
+	sleep(700);
 
-  ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], -0.2, 0.01));
+	// Lift it
+	comm.SetEndEffectorHeight(-0.3f);
+	sleep(700);
+	// Drive to other object
+	comm.SetMountRailPosition(0.25f);
+	sleep(1500);
+	// Put the object down on the other object
+	comm.SetEndEffectorHeight(-0.5f);
+	sleep(700);
+	comm.OpenGripper();
+	sleep(700);
 
-  // Drive to object
-  comm.SetMountRailPosition(-0.2f);
-  sleep(700);
-  comm.SetEndEffectorHeight(-0.5f);
-  sleep(700);
-  comm.CloseGripper();
-  sleep(700);
+	// Drive into homepose
+	comm.SetEndEffectorHeight(0);
+	comm.SetMountRailPosition(0);
+}
 
-  // Lift it
-  comm.SetEndEffectorHeight(-0.3f);
-  sleep(700);
-  // Drive to other object
-  comm.SetMountRailPosition(0.25f);
-  sleep(1500);
-  // Put the object down on the other object
-  comm.SetEndEffectorHeight(-0.5f);
-  sleep(700);
-  comm.OpenGripper();
+TEST (StackObject, ShouldSucceed)
+{
+	gztest::TestClient client("http://localhost:8080");
+	ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks"));
+	gztest::TestHelper th;
 
-  // Drive into homepose
-  comm.SetEndEffectorHeight(0);
-  comm.SetMountRailPosition(0);
-  ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], 0.25, 0.01));
-  boost::function<bool()> check = boost::bind (&gztest::TestClient::OnObject, &client, "r_box", "g_box");
-  ASSERT_EQ (th.waitForTrue(check, 10000), true);
+	ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], -0.2, 0.01));
+	moveBox();
+	ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], 0.25, 0.01));
+	boost::function<bool()> check = boost::bind(&gztest::TestClient::OnObject, &client, "r_box", "g_box");
+	ASSERT_EQ(th.waitForTrue(check, 10000), true); // Assert r_box is on g_box.
+}
+
+TEST (StackObject, ShouldFail)
+{
+	gztest::TestClient client("http://localhost:8080");
+	ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks_misplaced"));
+	gztest::TestHelper th;
+
+	moveBox();
+	boost::function<bool()> check = boost::bind(&gztest::TestClient::OnObject, &client, "r_box", "g_box");
+	ASSERT_EQ(th.waitForTrue(check, 10000), false); // Assert r_box is not on g_box.
 }
 // 
 // TEST (AnotherTest, baz) { 
