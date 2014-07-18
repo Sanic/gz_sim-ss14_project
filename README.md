@@ -9,26 +9,16 @@ This repository holds the code of our final project for the seminar. The task wa
 
 ### Usage
 - Checkout the repository with git clone --recursive , to get the contents of all submodules
-- Go to the folder where the repository contents are
-- mkdir build/
-- cd build
-- cmake ..
-- make
-- cd ..
-- Register your build/ folder to your gazebo plugin path:
-```
-export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:/FULL/PATH/TO/repo/build
-```
-- Register your build/ext/gztest/ folder to your gazebo plugin path. This is necessary for gazebo to find the testing plugin from gztest:
-```
-export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:/FULL/PATH/TO/repo/build/ext/gztest/
-```
 - Add the portal_robot model to your model database. You can do this by making a symlink to it:
 ```
 cd ~/.gazebo/models
 ln -s /FULL/PATH/TO/REPO/models/portal_robot
 ```
-
+- Go to the folder where the repository contents are
+- Build and prepare the project with the following command:
+```
+mkdir build && cd build && cmake .. && make && export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:`pwd`
+```
 - In the main directory, start gazebo with a world containing our robot with:
 ```
 gazebo worlds/portal_robot_with_bricks
@@ -36,8 +26,16 @@ gazebo worlds/portal_robot_with_bricks
 - You can use build/portal_controller_publisher to control the joints of the portal robot. The first parameter is the link_id (0 = endeffector mount, 1 = rail) while the second parameter is the angle you want to set the joint to. If you set the link_id to 2, you can open or close the gripper. Use the value "0" as the angle to close the gripper, and every other value >=1 to open it.
 
 ### Compile and run the tests
-The gtest library will be automatically downloaded to this directory, built and linked against the project. If you execute "cmake .. && make" and "./gazebo_ci_test" in the build/ folder, you can run every test defined in tests/.
-Please ensure, that only one cpp file in this directoy has a main method. Otherwise you will get errors during compile time.
+This project makes use of the gztest library, a gazebo unit test implementation based on Google Test. To execute the tests, start the gztest TestWrapper first:
+```
+cd build
+./ext/gztest/TestWrapper
+```
+You can also execute the TestWrapper in headless mode:
+```
+./ext/gztest/TestWrapper -hl
+```
+The actual tests are then executed by either running make test, or running ./gazebo_ci_test from inside the build directory.
 
 ### Version
 This project has been compiled and tested against 1.9.5. We used the gazebo that has been shipped with ROS Hydro.
