@@ -15,9 +15,9 @@ TEST (WorldLoader, PositiveReplaceWorld)
 	helper.sleep(5000);
 	for (int i = 0; i < 2; i++)
 	{
-		ASSERT_TRUE(client.LoadWorld("/home/moritz/gz_sim-ss14_project/worlds/portal_robot_with_bricks"));
+		ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks"));
 		helper.sleep(10000);
-		ASSERT_TRUE(client.LoadWorld("/home/moritz/gz_sim-ss14_project/worlds/two_cylinders"));
+		ASSERT_TRUE(client.LoadWorld("../worlds/two_cylinders"));
 		helper.sleep(10000);
 	}
 }

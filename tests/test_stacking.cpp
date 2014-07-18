@@ -17,7 +17,7 @@ void sleep(int _ms){
 
 TEST (StackObject, ShouldSucceed) { 
   gztest::TestClient client("http://localhost:8080");
-  ASSERT_TRUE(client.LoadWorld("/home/moritz/gz_sim-ss14_project/worlds/portal_robot_with_bricks"));
+  ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks"));
   gztest::TestHelper th;
   PortalControllerComm comm;
 
