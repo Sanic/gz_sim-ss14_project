@@ -40,4 +40,4 @@ The gtest library will be automatically downloaded to this directory, built and 
 Please ensure, that only one cpp file in this directoy has a main method. Otherwise you will get errors during compile time.
 
 ### Version
-This project has been compiled and tested against 1.9.5
+This project has been compiled and tested against 1.9.5. We used the gazebo that has been shipped with ROS Hydro.
