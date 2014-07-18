@@ -32,17 +32,17 @@ add_subdirectory(${EXT_PROJECTS_DIR}/gztest)
 include_directories(${EXT_PROJECTS_DIR}/gztest/include ${JSON_RPC_INCLUDES})
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
 
-add_library(portal_controller SHARED src/portal_controller.cpp)
+add_library(portal_controller SHARED src/portal_controller.cc)
 target_link_libraries(portal_controller portal_control_request_msgs ${GAZEBO_libraries} ${OGRE_LIBRARIES})
 add_dependencies(portal_controller portal_control_request_msgs)
 
-add_executable(portal_controller_publisher src/portal_controller_publisher.cpp)
+add_executable(portal_controller_publisher src/portal_controller_publisher.cc)
 #target_link_libraries(portal_controller_publisher portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
 target_link_libraries(portal_controller_publisher portal_controller_comm)
 add_dependencies(portal_controller_publisher portal_control_request_msgs)
 
 # PortalControllerComm library
-add_library(portal_controller_comm src/portal_controller_comm.cpp)
+add_library(portal_controller_comm src/portal_controller_comm.cc)
 target_link_libraries(portal_controller_comm portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
 add_dependencies(portal_controller_publisher portal_control_request_msgs)
 
