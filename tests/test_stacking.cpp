@@ -48,6 +48,7 @@ TEST (StackObject, ShouldSucceed)
 {
 	gztest::TestClient client("http://localhost:8080");
 	ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks"));
+	sleep(2000); // sleep 2 seconds to let the gzclient load completely
 	gztest::TestHelper th;
 
 	ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], -0.2, 0.01));
@@ -61,6 +62,7 @@ TEST (StackObject, ShouldFail)
 {
 	gztest::TestClient client("http://localhost:8080");
 	ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks_misplaced"));
+	sleep(2000); // sleep 2 seconds to let the gzclient load completely
 	gztest::TestHelper th;
 
 	moveBox();
