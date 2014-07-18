@@ -11,8 +11,8 @@
  * Please ensure that the Gazebo Master is running the correct world.
  */
 
-void sleep(int ms){
-  boost::this_thread::sleep(boost::posix_time::milliseconds(ms));
+void sleep(int _ms){
+  boost::this_thread::sleep(boost::posix_time::milliseconds(_ms));
 }
 
 TEST (StackObject, ShouldSucceed) { 
@@ -24,27 +24,27 @@ TEST (StackObject, ShouldSucceed) {
   ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], -0.2, 0.01));
 
   // Drive to object
-  comm.setMountRailPosition(-0.2f);
+  comm.SetMountRailPosition(-0.2f);
   sleep(700);
-  comm.setEndEffectorHeight(-0.5f);
+  comm.SetEndEffectorHeight(-0.5f);
   sleep(700);
-  comm.closeGripper();
+  comm.CloseGripper();
   sleep(700);
 
   // Lift it
-  comm.setEndEffectorHeight(-0.3f);
+  comm.SetEndEffectorHeight(-0.3f);
   sleep(700);
   // Drive to other object
-  comm.setMountRailPosition(0.25f);
+  comm.SetMountRailPosition(0.25f);
   sleep(1500);
   // Put the object down on the other object
-  comm.setEndEffectorHeight(-0.5f);
+  comm.SetEndEffectorHeight(-0.5f);
   sleep(700);
-  comm.openGripper();
+  comm.OpenGripper();
 
   // Drive into homepose
-  comm.setEndEffectorHeight(0);
-  comm.setMountRailPosition(0);
+  comm.SetEndEffectorHeight(0);
+  comm.SetMountRailPosition(0);
   ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], 0.25, 0.01));
   boost::function<bool()> check = boost::bind (&gztest::TestClient::OnObject, &client, "r_box", "g_box");
   ASSERT_EQ (th.waitForTrue(check, 10000), true);

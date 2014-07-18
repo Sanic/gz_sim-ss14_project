@@ -12,18 +12,18 @@ int main(int argc, char * argv[])
       switch(link_id)
       {
         case PC_ENDEFFECTOR_LINK_ID:
-          comm.setEndEffectorHeight(value);
+          comm.SetEndEffectorHeight(value);
         break;
         case PC_MOUNT_RAIL_LINK_ID: 
-          comm.setMountRailPosition(value);
+          comm.SetMountRailPosition(value);
         break;
         case PC_GRIPPER_LINK_ID: 
           if(value >=0 && value < 1){
-            comm.openGripper();
+            comm.OpenGripper();
           }
           else
           {
-            comm.closeGripper();
+            comm.CloseGripper();
           }
         break;
       }

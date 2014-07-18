@@ -29,11 +29,11 @@ class PortalControllerComm
   public: PortalControllerComm();
   public: ~PortalControllerComm();
   private: gazebo::transport::PublisherPtr pub;
-  private: portal_control_request_msgs::msgs::PortalControlRequest createRequest(int link_id, float angle);
-  public: void closeGripper();
-  public: void openGripper();
-  public: void setEndEffectorHeight(float value);
-  public: void setMountRailPosition(float value);
+  private: portal_control_request_msgs::msgs::PortalControlRequest CreateRequest(int _linkId, float _angle);
+  public: void CloseGripper();
+  public: void OpenGripper();
+  public: void SetEndEffectorHeight(float _value);
+  public: void SetMountRailPosition(float _value);
 
 };
 #endif
