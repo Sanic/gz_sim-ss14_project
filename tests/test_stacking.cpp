@@ -16,7 +16,7 @@ void sleep(int _ms)
 	boost::this_thread::sleep(boost::posix_time::milliseconds(_ms));
 }
 
-void moveBox()
+void moveBox(int finalSleep)
 {
 	PortalControllerComm comm;
 	// Drive to object
@@ -37,7 +37,10 @@ void moveBox()
 	comm.SetEndEffectorHeight(-0.5f);
 	sleep(700);
 	comm.OpenGripper();
-	sleep(700);
+	if (finalSleep > 0)
+	{
+		sleep(finalSleep);
+	}
 
 	// Drive into homepose
 	comm.SetEndEffectorHeight(0);
@@ -52,7 +55,7 @@ TEST (StackObject, ShouldSucceed)
 	gztest::TestHelper th;
 
 	ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], -0.2, 0.01));
-	moveBox();
+	moveBox(700);
 	ASSERT_TRUE(th.valueInRange(client.GetPosition("r_box")[1], 0.25, 0.01));
 	boost::function<bool()> check = boost::bind(&gztest::TestClient::OnObject, &client, "r_box", "g_box");
 	ASSERT_EQ(th.waitForTrue(check, 10000), true); // Assert r_box is on g_box.
@@ -61,11 +64,24 @@ TEST (StackObject, ShouldSucceed)
 TEST (StackObject, ShouldFail)
 {
 	gztest::TestClient client("http://localhost:8080");
+	ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks"));
+	sleep(2000); // sleep 2 seconds to let the gzclient load completely
+	gztest::TestHelper th;
+
+	// Dont wait for gripper, so moving to initial position should pull the r_box from g_box
+	moveBox(0);
+	boost::function<bool()> check = boost::bind(&gztest::TestClient::OnObject, &client, "r_box", "g_box");
+	ASSERT_EQ(th.waitForTrue(check, 10000), false); // Assert r_box is not on g_box, because it was pulled.
+}
+
+TEST (StackObject, ShouldFailToo)
+{
+	gztest::TestClient client("http://localhost:8080");
 	ASSERT_TRUE(client.LoadWorld("../worlds/portal_robot_with_bricks_misplaced"));
 	sleep(2000); // sleep 2 seconds to let the gzclient load completely
 	gztest::TestHelper th;
 
-	moveBox();
+	moveBox(0);
 	boost::function<bool()> check = boost::bind(&gztest::TestClient::OnObject, &client, "r_box", "g_box");
 	ASSERT_EQ(th.waitForTrue(check, 10000), false); // Assert r_box is not on g_box.
 }
