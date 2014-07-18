@@ -27,13 +27,10 @@ set(EXT_PROJECTS_DIR ${PROJECT_SOURCE_DIR}/ext)
 add_subdirectory(${EXT_PROJECTS_DIR}/gtest)
 enable_testing()
 include_directories(${GTEST_INCLUDE_DIRS} ${COMMON_INCLUDES})
-# TODO provide proper CMAKE var
+
 add_subdirectory(${EXT_PROJECTS_DIR}/gztest)
 include_directories(${EXT_PROJECTS_DIR}/gztest/include ${JSON_RPC_INCLUDES})
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
-
-add_library(control_portal SHARED src/control_portal.cpp)
-target_link_libraries(control_portal ${GAZEBO_libraries} ${OGRE_LIBRARIES})
 
 add_library(portal_controller SHARED src/portal_controller.cpp)
 target_link_libraries(portal_controller portal_control_request_msgs ${GAZEBO_libraries} ${OGRE_LIBRARIES})
@@ -48,16 +45,6 @@ add_dependencies(portal_controller_publisher portal_control_request_msgs)
 add_library(portal_controller_comm src/portal_controller_comm.cpp)
 target_link_libraries(portal_controller_comm portal_control_request_msgs ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} )
 add_dependencies(portal_controller_publisher portal_control_request_msgs)
-
-# Build tests
-# add_executable(delayed_tests tests/delayed_tests.cpp)
-# Download and build googletest (from ext/gtest/ ) before building the test
-# add_dependencies(delayed_tests googletest)
-# target_link_libraries(delayed_tests pthread)
-# 	target_link_libraries(delayed_tests 
-# 		${GTEST_LIBS_DIR}/libgtest.a
-# 		${GTEST_LIBS_DIR}/libgtest_main.a
-# 	)
 
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
